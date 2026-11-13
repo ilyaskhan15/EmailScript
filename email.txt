@@ -1,0 +1,21 @@
+Dear {professor_name},
+
+I hope this email finds you well.
+
+My name is Muhammad Ilyas, and I am from Pakistan. I recently graduated with a Bachelor's degree in Software Engineering from the University of Swat, Pakistan, with a CGPA of 3.25/4.00. I am writing to express my interest in pursuing a Master's degree at {university} under your supervision through the Chinese Government Scholarship (CSC) for the 2027 intake.
+
+During my undergraduate studies, I gained knowledge and practical experience in software engineering, Python programming, database management, and web development. My final-year project, "Design and Development of Nova Store: A Web-Based E-Commerce Platform," helped me strengthen my technical and problem-solving skills. I also worked as a Full-Stack Developer at Vertex Software Technology Park, where I gained professional experience in Python, Django, React.js, and database systems.
+
+I am particularly interested in {research_area}. I would be grateful for the opportunity to develop my research skills and contribute to academic research under your guidance at {university}.
+
+I would sincerely appreciate it if you could consider me as a prospective Master's student under your supervision and, if possible, provide an acceptance letter to support my CSC scholarship application.
+
+I have attached my CV for your review. Thank you very much for your valuable time and consideration. I look forward to your positive response.
+
+Best regards,
+
+Muhammad Ilyas  
+BS Software Engineering  
+University of Swat, Pakistan  
+Email: ilyas.uos.edu@gmail.com  
+GitHub: https://github.com/ilyaskhan15
