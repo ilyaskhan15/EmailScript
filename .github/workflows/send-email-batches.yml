@@ -1,6 +1,6 @@
 name: Send daily email batch
 
-on:
+"on":
   workflow_dispatch:
   schedule:
     # 6:00 AM Pakistan time (01:00 UTC), every day.
