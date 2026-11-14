@@ -1,6 +1,6 @@
 name: Send first test email
 
-on:
+"on":
   workflow_dispatch:
   schedule:
     # One-time test target: 11:37 PKT = 06:37 UTC on 2026-11-14.
