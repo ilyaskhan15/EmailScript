@@ -3,9 +3,9 @@ name: Send first test email
 "on":
   workflow_dispatch:
   schedule:
-    # One-time test target: 11:37 PKT = 06:37 UTC on 2026-11-14.
+    # Test target: 11:53 PKT = 06:53 UTC on 2026-11-14.
     # Disable or remove this schedule after the test to avoid daily repeats.
-    - cron: "37 6 * * *"
+    - cron: "53 6 * * *"
 
 permissions:
   contents: read
@@ -31,6 +31,6 @@ jobs:
         env:
           SMTP_HOST: smtp.gmail.com
           SMTP_PORT: "587"
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_USERNAME: ${{ secrets.MUHAMMAD_ILYAS }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         run: python send_first_test_email.py --workbook test_emails.xlsx --send
