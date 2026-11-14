@@ -36,6 +36,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sheet", default=DEFAULT_SHEET)
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
     parser.add_argument(
+        "--days",
+        type=int,
+        default=3,
+        help="Number of scheduled days; the final day receives all remaining contacts.",
+    )
+    parser.add_argument(
         "--start-date",
         type=date.fromisoformat,
         required=True,
@@ -53,13 +59,15 @@ def main() -> None:
     args = parse_args()
     if args.batch_size < 1:
         raise ValueError("--batch-size must be at least 1.")
+    if args.days < 1:
+        raise ValueError("--days must be at least 1.")
     for path in (args.workbook, args.template, args.cv):
         if not path.is_file():
             raise FileNotFoundError(f"Required file was not found: {path}")
 
     today = datetime.now(PAKISTAN_TIME).date()
     day_number = (today - args.start_date).days
-    if day_number < 0:
+    if day_number < 0 or day_number >= args.days:
         print(f"Batch schedule starts on {args.start_date.isoformat()}; no emails sent.")
         return
 
@@ -69,7 +77,8 @@ def main() -> None:
         if "@" in email_address(row)
     ]
     start = day_number * args.batch_size
-    batch = rows[start : start + args.batch_size]
+    end = None if day_number == args.days - 1 else start + args.batch_size
+    batch = rows[start:end]
     if not batch:
         print(f"All {len(rows)} valid contacts have already been processed; no emails sent.")
         return
