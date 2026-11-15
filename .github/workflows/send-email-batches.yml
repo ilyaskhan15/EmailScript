@@ -3,8 +3,9 @@ name: Send daily email batch
 "on":
   workflow_dispatch:
   schedule:
-    # 6:00 AM Pakistan time (01:00 UTC), every day.
-    - cron: "0 1 * * *"
+    # 6:05 AM Pakistan time (01:05 UTC), every day. Avoid the top of the hour
+    # because GitHub Actions may delay scheduled workflows during peak load.
+    - cron: "5 1 * * *"
 
 permissions:
   contents: read
