@@ -36,6 +36,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sheet", default=DEFAULT_SHEET)
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE)
     parser.add_argument(
+        "--exclude-email",
+        action="append",
+        default=[],
+        help="Exclude this recipient from scheduled batches; may be repeated.",
+    )
+    parser.add_argument(
         "--days",
         type=int,
         default=3,
@@ -71,18 +77,21 @@ def main() -> None:
         print(f"Batch schedule starts on {args.start_date.isoformat()}; no emails sent.")
         return
 
-    rows = [
-        row
-        for row in load_rows(args.workbook, args.sheet)
-        if "@" in email_address(row)
-    ]
+    rows = load_rows(args.workbook, args.sheet)
     start = day_number * args.batch_size
     end = None if day_number == args.days - 1 else start + args.batch_size
     batch = rows[start:end]
     if not batch:
-        print(f"All {len(rows)} valid contacts have already been processed; no emails sent.")
+        print(f"All {len(rows)} contacts have already been processed; no emails sent.")
         return
 
+    excluded_emails = {address.strip().casefold() for address in args.exclude_email}
+    valid_batch = [
+        row
+        for row in batch
+        if "@" in email_address(row)
+        and email_address(row).casefold() not in excluded_emails
+    ]
     template = args.template.read_text(encoding="utf-8")
     messages = [
         build_message(
@@ -92,12 +101,13 @@ def main() -> None:
             subject=make_subject(row),
             sender=os.getenv("SMTP_USERNAME"),
         )
-        for row in batch
+        for row in valid_batch
     ]
 
     print(
         f"Pakistan date {today.isoformat()}: selected contacts "
-        f"{start + 1}-{start + len(batch)} of {len(rows)}."
+        f"{start + 1}-{start + len(batch)} of {len(rows)}; "
+        f"{len(messages)} valid recipient(s)."
     )
     if args.send:
         send_messages(messages)

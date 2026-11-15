@@ -37,4 +37,6 @@ jobs:
           --start-date 2026-11-15
           --batch-size 50
           --days 3
+          --exclude-email butong@nju.edu.cn
+          --exclude-email liuxiaoguang@nankai.edu.cn
           --send
